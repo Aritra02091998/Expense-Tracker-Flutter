@@ -90,10 +90,12 @@ class _NewExpenseState extends State<AddNewExpense> {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       child: Column(
         children: [
+
           // Expense Title Input
           TextField(
             controller: _titleController,
