@@ -32,14 +32,12 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void addNewExpenseItem(Expense expense) {
-
     setState(() {
       _registeredExpenses.add(expense);
     });
   }
 
   void removeExistingExpense(Expense expense) {
-
     // In case user presses Undo, we need to keep the deleted expense at the same location
     final int targetExpenseIndex = _registeredExpenses.indexOf(expense);
 
@@ -56,36 +54,33 @@ class _ExpensesState extends State<Expenses> {
         duration: const Duration(seconds: 5),
         content: Text('Expense Removed'),
         action: SnackBarAction(
-          label: 'Undo', 
-          onPressed: (){
+          label: 'Undo',
+          onPressed: () {
             setState(() {
               _registeredExpenses.insert(targetExpenseIndex, expense);
             });
-          }
+          },
         ),
-      )
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    
+    print(MediaQuery.of(context).size.width);
+    print(MediaQuery.of(context).size.height);
+
     // When no expense is present on the app.
     Widget mainPageContent = Center(
       child: Text(
         'No Expense Found !!',
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary
-        ),
-      )
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary),
+      ),
     );
 
     if (_registeredExpenses.isNotEmpty) {
-      mainPageContent = ExpenseList(
-        expenses: _registeredExpenses, 
-        onRemoveExpense: removeExistingExpense
-      );
+      mainPageContent = ExpenseList(expenses: _registeredExpenses, onRemoveExpense: removeExistingExpense);
     }
 
     return Scaffold(
@@ -93,13 +88,13 @@ class _ExpensesState extends State<Expenses> {
         title: const Text('Expense Tracker'),
         actions: [IconButton(onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add))],
       ),
+
+      // Main UI Stack.
       body: Column(
         children: [
           Chart(expenses: _registeredExpenses),
           const SizedBox(height: 20),
-          Expanded(
-            child: mainPageContent
-          ),
+          Expanded(child: mainPageContent),
         ],
       ),
     );
