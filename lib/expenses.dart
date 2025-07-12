@@ -68,8 +68,8 @@ class _ExpensesState extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     
-    print(MediaQuery.of(context).size.width);
-    print(MediaQuery.of(context).size.height);
+    // Make the UI Stack responsive based on available width.
+    final double width = MediaQuery.of(context).size.width;
 
     // When no expense is present on the app.
     Widget mainPageContent = Center(
@@ -90,9 +90,17 @@ class _ExpensesState extends State<Expenses> {
       ),
 
       // Main UI Stack.
-      body: Column(
+      body: width < 800? Column(
         children: [
           Chart(expenses: _registeredExpenses),
+          const SizedBox(height: 20),
+          Expanded(child: mainPageContent),
+        ],
+      ): Row(
+        children: [
+          Expanded(
+            child: Chart(expenses: _registeredExpenses)
+          ),
           const SizedBox(height: 20),
           Expanded(child: mainPageContent),
         ],
